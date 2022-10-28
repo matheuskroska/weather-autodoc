@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { AsyncPaginate } from 'react-select-async-paginate'
-import { getWeather } from '../../redux/actions/getWeather'
+import { getWeather } from '../../hooks/getWeather'
 import { getCity } from '../../hooks/getCity'
 
 export const Search = () => {

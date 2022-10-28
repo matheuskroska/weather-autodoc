@@ -1,6 +1,6 @@
-import { WEATHER_API_URL } from '../../api'
-import { ApiOptions } from '../../api'
-import { pushToList } from '../../redux/slices/weatherSlice'
+import { WEATHER_API_URL } from '../api'
+import { ApiOptions } from '../api'
+import { pushToList } from '../redux/slices/weatherSlice'
 
 export const getWeather = (searchData) => async (dispatch) => {
   const [geoCoordinates] = Array(searchData.value)
