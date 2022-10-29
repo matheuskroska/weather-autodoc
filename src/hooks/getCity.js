@@ -1,5 +1,5 @@
-import { WEATHER_API_URL } from '../api'
-import { ApiOptions } from '../api'
+import { WEATHER_API_URL } from '../config/api'
+import { ApiOptions } from '../config/api'
 
 export const getCity = async (inputValue) => {
   try {
@@ -8,11 +8,12 @@ export const getCity = async (inputValue) => {
       ApiOptions,
     )
     const data = await response.json()
+
     return {
       options: data?.map((location) => {
         return {
           id: location.id,
-          value: `${location.lat},${location.lon}`,
+          value: `${location.name}`,
           label: `${location.name}, ${location.country}`,
         }
       }),
