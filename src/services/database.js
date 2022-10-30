@@ -11,7 +11,7 @@ import {
 } from 'firebase/firestore'
 
 import firestoreDB from '../config/firestore'
-import { updateData } from '../features/weather/weatherSlice'
+// import { updateData } from '../features/weather/weatherSlice'
 
 /* Just a constant that is used to reference the collection and the document id. */
 const WEATHER_COLLECTION = 'weatherRecords'
@@ -19,12 +19,12 @@ const WEATHER_COLLECTION_LOG = 'weatherRecordsLog'
 const DOCUMENT_ID = 'doc_id'
 const CITY_NAME = 'location.name'
 
-/**
- * It checks if a document exists in a collection, if it doesn't, it creates a new document in the
- * collection. If it does, it updates the document with a field that references the document id.
- * @param payload
- */
 export const addWeather = async (payload) => {
+  /**
+   * It checks if a document exists in a collection, if it doesn't, it creates a new document in the
+   * collection and then updates the document with a new field.
+   * @param payload - {
+   */
   try {
     const querySnapshot = await hasOnCollection(
       weatherRecordsRef,
@@ -38,6 +38,7 @@ export const addWeather = async (payload) => {
       await updateDoc(doc(firestoreDB, WEATHER_COLLECTION, docRef.id), {
         doc_id: docRef.id,
       })
+      await addWeatherLog({ ...payload, doc_id: docRef.id })
     }
   } catch (e) {}
 }
@@ -85,27 +86,16 @@ export const updateWeather = async (payload) => {
     await updateDoc(doc(firestoreDB, WEATHER_COLLECTION, payload.doc_id), {
       ...payload,
     })
+    addWeatherLog({ ...payload, doc_id: payload.doc_id })
   } catch (e) {}
 }
 
-/**
- * Listen for changes to the weatherRecordsRef collection in Firestore, and dispatch an action to
- * update the Redux store with the new data.
- * @param dispatch - the dispatch function from the store
- */
-export const listenData = (dispatch) => {
-  onSnapshot(query(weatherRecordsRef), (querySnapshot) => {
-    const weather = []
-    querySnapshot.forEach((doc) => {
-      weather.push(doc.data())
-    })
-    dispatch(updateData(weather))
-  })
-}
-
 /* Creating a reference to the collection in the database. */
-const weatherRecordsRef = collection(firestoreDB, WEATHER_COLLECTION)
-const weatherRecordsLogRef = collection(firestoreDB, WEATHER_COLLECTION_LOG)
+export const weatherRecordsRef = collection(firestoreDB, WEATHER_COLLECTION)
+export const weatherRecordsLogRef = collection(
+  firestoreDB,
+  WEATHER_COLLECTION_LOG,
+)
 
 /**
  * It returns true if the collection has a document with the specified field and value
@@ -119,4 +109,20 @@ export const hasOnCollection = async (collection, field, value) => {
   const q = query(collection, where(field, '==', value))
   const querySnapshot = await getDocs(q)
   return querySnapshot
+}
+
+/**
+ * Listen to the data in the collection and dispatch the action with the data as the payload.
+ * @param dispatch - the dispatch function from the store
+ * @param collection - the collection you want to listen to
+ * @param action - The action to dispatch
+ */
+export const listenData = (dispatch, collection, action) => {
+  onSnapshot(query(collection), (querySnapshot) => {
+    const weather = []
+    querySnapshot.forEach((doc) => {
+      weather.push(doc.data())
+    })
+    dispatch(action(weather))
+  })
 }
