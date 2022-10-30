@@ -13,103 +13,110 @@ import {
 import firestoreDB from '../config/firestore'
 import { updateData } from '../features/weather/weatherSlice'
 
+/* Just a constant that is used to reference the collection and the document id. */
+const WEATHER_COLLECTION = 'weatherRecords'
+const WEATHER_COLLECTION_LOG = 'weatherRecordsLog'
+const DOCUMENT_ID = 'doc_id'
+const CITY_NAME = 'location.name'
+
+/**
+ * It checks if a document exists in a collection, if it doesn't, it creates a new document in the
+ * collection. If it does, it updates the document with a field that references the document id.
+ * @param payload
+ */
 export const addWeather = async (payload) => {
   try {
-    const q = query(
-      collection(firestoreDB, 'weatherRecords'),
-      where('location.name', '==', payload.location.name),
+    const querySnapshot = await hasOnCollection(
+      weatherRecordsRef,
+      CITY_NAME,
+      payload.location.name,
     )
-    const querySnapshot = await getDocs(q)
-    if (!querySnapshot.empty) {
-      console.log("Matching document's id: ", querySnapshot.docs[0].id)
-      console.log('use refresh instead')
-    } else {
-      const docRef = await addDoc(collection(firestoreDB, 'weatherRecords'), {
-        location: {
-          name: payload.location.name,
-          id: payload.location.id,
-        },
-        current: {
-          temp_c: payload.current.temp_c,
-        },
-        // ...payload,
+    if (querySnapshot.empty) {
+      const docRef = await addDoc(weatherRecordsRef, {
+        ...payload,
       })
-      await updateDoc(doc(firestoreDB, 'weatherRecords', docRef.id), {
+      await updateDoc(doc(firestoreDB, WEATHER_COLLECTION, docRef.id), {
         doc_id: docRef.id,
       })
-      console.log('Document written with ID: ', docRef.id)
     }
-  } catch (e) {
-    console.error('Error adding document: ', e)
-  }
+  } catch (e) {}
 }
 
+/**
+ * It takes a payload, and adds it to a collection in Firestore.
+ * @param payload
+ */
 export const addWeatherLog = async (payload) => {
   try {
-    await addDoc(collection(firestoreDB, 'weatherRecordsLog'), {
-      location: {
-        name: payload.location.name,
-        id: payload.location.id,
-      },
-      current: {
-        temp_c: payload.current.temp_c,
-      },
-      doc_id: payload.doc_id,
-      // ...payload,
+    await addDoc(weatherRecordsLogRef, {
+      ...payload,
     })
-    console.log('Log Document written')
-  } catch (e) {
-    console.error('Error adding document: ', e)
-  }
+  } catch (e) {}
 }
 
+/**
+ * Delete a weather record and if it exists, delete the corresponding weather record log.
+ * @param id - the id of the document to be deleted
+ */
 export const deleteWeather = async (id) => {
   try {
-    await deleteDoc(doc(firestoreDB, 'weatherRecords', id))
-    console.log('Document successfully deleted!')
-    const q = query(
-      collection(firestoreDB, 'weatherRecordsLog'),
-      where('doc_id', '==', id),
+    await deleteDoc(doc(firestoreDB, WEATHER_COLLECTION, id))
+
+    const querySnapshot = await hasOnCollection(
+      weatherRecordsLogRef,
+      DOCUMENT_ID,
+      id,
     )
-    const querySnapshot = await getDocs(q)
+
     if (!querySnapshot.empty) {
       querySnapshot.forEach((doc) => {
         deleteDoc(doc.ref)
       })
     }
-
-    console.log('Log Document successfully deleted!')
-  } catch (e) {
-    console.error('Error removing document: ', e)
-  }
+  } catch (e) {}
 }
 
+/**
+ * It updates a document in a collection in a database.
+ * @param payload - {
+ */
 export const updateWeather = async (payload) => {
   try {
-    await updateDoc(doc(firestoreDB, 'weatherRecords', payload.doc_id), {
-      location: {
-        name: payload.location.name,
-        id: payload.location.id,
-      },
-      current: {
-        temp_c: payload.current.temp_c,
-      },
-      doc_id: payload.doc_id,
-      // ...payload,
+    await updateDoc(doc(firestoreDB, WEATHER_COLLECTION, payload.doc_id), {
+      ...payload,
     })
-    console.log('Document successfully updated!')
-  } catch (e) {
-    console.error('Error updating document: ', e)
-  }
+  } catch (e) {}
 }
 
+/**
+ * Listen for changes to the weatherRecordsRef collection in Firestore, and dispatch an action to
+ * update the Redux store with the new data.
+ * @param dispatch - the dispatch function from the store
+ */
 export const listenData = (dispatch) => {
-  const q = query(collection(firestoreDB, 'weatherRecords'))
-  onSnapshot(q, (querySnapshot) => {
+  onSnapshot(query(weatherRecordsRef), (querySnapshot) => {
     const weather = []
     querySnapshot.forEach((doc) => {
       weather.push(doc.data())
     })
     dispatch(updateData(weather))
   })
+}
+
+/* Creating a reference to the collection in the database. */
+const weatherRecordsRef = collection(firestoreDB, WEATHER_COLLECTION)
+const weatherRecordsLogRef = collection(firestoreDB, WEATHER_COLLECTION_LOG)
+
+/**
+ * It returns true if the collection has a document with the specified field and value
+ * @param collection - The collection you want to query
+ * @param field - the field you want to check
+ * @param value - the value you want to check for
+ * @returns A promise that resolves to a boolean.
+ */
+
+export const hasOnCollection = async (collection, field, value) => {
+  const q = query(collection, where(field, '==', value))
+  const querySnapshot = await getDocs(q)
+  return querySnapshot
 }
