@@ -1,15 +1,19 @@
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
 import { AsyncPaginate } from 'react-select-async-paginate'
-import { getWeather } from '../../redux/actions/getWeather'
-import { getCity } from '../../hooks/getCity'
+
+import { getCity, getWeather } from '../../services/api'
+import { addWeather } from '../../services/database'
 
 export const Search = () => {
-  const dispatch = useDispatch()
   const [search, setSearch] = useState('')
 
-  const handleOnChange = (value) => {
-    dispatch(getWeather(value))
+  const handleOnChange = async (city) => {
+    try {
+      const cityWeather = await getWeather(city)
+      await addWeather(cityWeather)
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   return (
