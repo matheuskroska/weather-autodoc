@@ -82,6 +82,7 @@ export const deleteWeather = async (id) => {
  * @param payload - {
  */
 export const updateWeather = async (payload) => {
+  // console.log(payload)
   try {
     await updateDoc(doc(firestoreDB, WEATHER_COLLECTION, payload.doc_id), {
       ...payload,

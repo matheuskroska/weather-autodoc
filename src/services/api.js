@@ -24,6 +24,7 @@ export const getCity = async (inputValue) => {
 
 export const getWeather = async (searchData) => {
   const cityData = searchData
+  console.log(cityData)
 
   try {
     const response = await fetch(
@@ -32,9 +33,35 @@ export const getWeather = async (searchData) => {
       ApiOptions,
     )
 
+    const data = await response.json()
+
     const cityWeather = {
-      ...(await response.json()),
-      location: { name: cityData.name, id: cityData.id },
+      // ...(await response.json()),
+      current: {
+        temp_c: data.current.temp_c,
+      },
+      forecast: {
+        forecastday: [
+          {
+            day: {
+              avgtemp_c: data.forecast.forecastday[0].day.avgtemp_c,
+              condition: {
+                icon: data.forecast.forecastday[0].day.condition.icon,
+              },
+              maxtemp_c: data.forecast.forecastday[0].day.maxtemp_c,
+              mintemp_c: data.forecast.forecastday[0].day.mintemp_c,
+              daily_chance_of_rain:
+                data.forecast.forecastday[0].day.daily_chance_of_rain,
+            },
+          },
+        ],
+      },
+      location: {
+        id: cityData.id,
+        name: cityData.name,
+        label: cityData.label,
+        lastUpdate: new Date().toLocaleString(),
+      },
     }
     return cityWeather
   } catch {

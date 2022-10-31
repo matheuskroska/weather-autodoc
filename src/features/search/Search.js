@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
-import { AsyncPaginate } from 'react-select-async-paginate'
-
 import { getCity, getWeather } from '../../services/api'
 import { addWeather } from '../../services/database'
+import { StyledSearch } from './Search.styled'
 
 export const Search = () => {
   const [search, setSearch] = useState('')
@@ -17,8 +16,8 @@ export const Search = () => {
   }
 
   return (
-    <AsyncPaginate
-      placeholder='Search for city'
+    <StyledSearch
+      placeholder='Busque pelo nome da cidade...'
       debounceTimeout={600}
       value={search}
       onChange={handleOnChange}

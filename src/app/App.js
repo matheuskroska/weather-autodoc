@@ -1,23 +1,16 @@
-import { Dashboard } from '../pages/Dashboard'
-import { Home } from '../pages/Home'
+import { Dashboard } from '../pages/Dashboard/Dashboard'
+import { Home } from '../pages/Home/Home'
 import { Link, Routes, Route } from 'react-router-dom'
-
+import { Header } from '../features/header/Header'
 function App() {
   return (
     <>
-      <ul>
-        <li>
-          <Link to='/'>Home</Link>
-        </li>
-        <li>
-          <Link to='/dashboard'>Mostrar min/max</Link>
-        </li>
-      </ul>
-
+      <Header />
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/dashboard' element={<Dashboard />} />
       </Routes>
+      <footer></footer>
     </>
   )
 }

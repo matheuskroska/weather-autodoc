@@ -1,7 +1,9 @@
+import { ArchiveIcon } from '@radix-ui/react-icons'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { updateLogData } from '../features/weatherLog/weatherLogSlice'
-import { listenData, weatherRecordsLogRef } from '../services/database'
+import { updateLogData } from '../../features/weatherLog/weatherLogSlice'
+import { listenData, weatherRecordsLogRef } from '../../services/database'
+import { ContainerPage } from '../ContainerPage/ContainerPage'
 
 export const Dashboard = () => {
   const dispatch = useDispatch()
@@ -31,7 +33,12 @@ export const Dashboard = () => {
   const tempMin = useTemperature(weatherLogLists, Math.min)
 
   return (
-    <>
+    <ContainerPage
+      icon={<ArchiveIcon />}
+      pageTitle='Registro Max/Min por Cidade'
+      buttonTitle='Voltar'
+      toUrl='/'
+    >
       <h1>Dashboard</h1>
       <ul>
         {tempMax &&
@@ -51,6 +58,6 @@ export const Dashboard = () => {
             </li>
           ))}
       </ul>
-    </>
+    </ContainerPage>
   )
 }

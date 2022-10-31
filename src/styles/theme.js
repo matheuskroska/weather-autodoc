@@ -1,0 +1,65 @@
+export const theme = {
+  grid: {
+    lg: '114rem',
+  },
+  projectWidth: '1245px',
+  font: {
+    family: 'Bai Jamjuree',
+    weigths: {
+      light: 300,
+      regular: 400,
+      medium: 500,
+      bold: 700,
+    },
+    sizes: {
+      xsmall: '1.2em',
+      small: '1.4em',
+      paragraph: '1.8em',
+      large: '3.2em',
+      subtitle: '2.2em',
+      title: '4em',
+    },
+    lineHeights: {
+      small: '2.4rem',
+      large: '5.4rem',
+    },
+  },
+  colors: {
+    red: '#e62e4d',
+    black: '#212429',
+    white: '#FFFFFF',
+    blue: '#021744',
+    gray100: '#F8F9FA',
+    gray200: '#DDE2E5',
+    gray300: '#ACB5BD',
+    gray400: '#495057',
+  },
+  space: {
+    0: '0.4rem',
+    1: '0.8rem',
+    2: '1.2rem',
+    3: '1.4rem',
+    4: '1.6rem',
+    5: '2.4rem',
+    6: '3.2rem',
+    7: '4rem',
+  },
+  borderRadius: {
+    rounded: '50%',
+    sm: '0.4rem',
+    md: '0.5rem',
+    lg: '0.8rem',
+  },
+  transitions: {
+    slow: '0.5s',
+    fast: '0.2s',
+  },
+  breakpoints: {
+    smallMobile: '320px',
+    mobile: '425px',
+    tablet: '928px',
+    smallDesktop: '1024px',
+    desktop: '1440px',
+    largeDesktop: '1920px',
+  },
+}
