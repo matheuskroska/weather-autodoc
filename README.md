@@ -1,6 +1,6 @@
 # weather-autodoc
 
-utilizar o env.example neste diretorio, adicionar as chaves do firebase
+utilizar o env.example neste diretorio, adicionar as chaves do firebase e renomear para .env
 
 
 # data flow
