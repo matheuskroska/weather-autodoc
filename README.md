@@ -1,17 +1,17 @@
-# Getting Started with Create React App
+# weather-autodoc
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+utilizar o env.example neste diretorio, adicionar as chaves do firebase
 
-### `npm start`
+// google api keys
+REACT_APP_FIREBASE_API_KEY=
+REACT_APP_FIREBASE_AUTH_DOMAIN=
+REACT_APP_FIREBASE_DATABASE_URL=
+REACT_APP_FIREBASE_PROJECT_ID=
+REACT_APP_FIREBASE_STORAGE_BUCKET=
+REACT_APP_FIREBASE_MESSAGING_SENDER_ID=
+REACT_APP_FIREBASE_APP_ID=
+REACT_APP_FIREBASE_MEASUREMENT_ID=
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-
-
+# data flow
 ![](https://i.imgur.com/E91tAHx.png)
