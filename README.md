@@ -14,3 +14,4 @@ See the section about [running tests](https://facebook.github.io/create-react-ap
 
 
 
+![](https://i.imgur.com/S2m9PmA.png)
