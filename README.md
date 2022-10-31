@@ -1,5 +1,9 @@
 ## weather-autodoc
 
+teste para a vaga de desenvolvedor frontend
+
+## instruções
+
 utilizar o env.example neste diretorio, adicionar as chaves do firebase e renomear para .env
 
 ## tech
