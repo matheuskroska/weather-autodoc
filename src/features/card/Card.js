@@ -14,13 +14,12 @@ import {
   StyledCurrent,
   StyledFlex,
   StyledLastUpdate,
-  StyledTemp,
   StyledTempMinMax,
   StyledTempWrapper,
   StyledTitle,
 } from './Card.styled'
 
-export const Card = ({ weather, ...props }) => {
+export const Card = ({ extended, weather, ...props }) => {
   const weatherLists = useSelector((state) => state.weather.weatherList)
 
   const handleUpdate = useDebounce((location, weatherLists) =>
@@ -48,20 +47,40 @@ export const Card = ({ weather, ...props }) => {
     <StyledCard>
       <StyledContainer>
         <StyledTitle>{weather.location.label}</StyledTitle>
-        <StyledFlex>
+        <StyledFlex extended>
           <StyledTempWrapper>
             <StyledCurrent>
+              <img src={weather.current.condition.icon} alt='weatherIcon'></img>
+              {weather.current.temp_c}°C
+            </StyledCurrent>
+            <StyledTempMinMax>
+              <div>
+                <span>{weather.forecast.forecastday[0].day.maxtemp_c} °C</span>
+                <span>{weather.forecast.forecastday[0].day.mintemp_c} °C</span>
+              </div>
               <img
                 src={weather.forecast.forecastday[0].day.condition.icon}
                 alt='weatherIcon'
               ></img>
-              {weather.current.temp_c}°C
-            </StyledCurrent>
-            <StyledTempMinMax>
-              <span>{weather.forecast.forecastday[0].day.maxtemp_c} °C</span>
-              <span>{weather.forecast.forecastday[0].day.mintemp_c} °C</span>
             </StyledTempMinMax>
           </StyledTempWrapper>
+          {extended && (
+            <>
+              <StyledAverage>
+                <span>SENSAÇÃO TÉRMICA: {weather.current.feelslike_c} °C</span>
+                <span>VENTO: {weather.current.gust_kph} KM</span>
+              </StyledAverage>
+              <StyledAverage>
+                <span>
+                  NASCER DO SOL: {weather.forecast.forecastday[0].astro.sunrise}
+                </span>
+                <span>
+                  POR DO SOL: {weather.forecast.forecastday[0].astro.sunset}
+                </span>
+              </StyledAverage>
+            </>
+          )}
+
           <StyledAverage>
             <span>AVG {weather.forecast.forecastday[0].day.avgtemp_c} °C</span>
             <span>

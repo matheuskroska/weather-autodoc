@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { theme } from '../../styles/theme'
 
 export const StyledCard = styled.div`
@@ -42,10 +42,20 @@ export const StyledTempWrapper = styled.div`
 
 export const StyledTempMinMax = styled.div`
   display: flex;
-  flex-direction: column;
   margin-left: ${theme.space[1]};
   gap: ${theme.space[0]};
   font-weight: ${theme.font.weigths.medium};
+  align-items: center;
+
+  div:first-child {
+    flex-direction: column;
+    display: flex;
+  }
+
+  img {
+    width: 1.2rem;
+    height: 1.2rem;
+  }
 
   span:first-child {
     font-size: ${theme.font.sizes.small};
@@ -58,6 +68,7 @@ export const StyledTempMinMax = styled.div`
 `
 
 export const StyledAverage = styled(StyledTempMinMax)`
+  flex-direction: column;
   align-items: center;
 
   span:last-child {
@@ -77,6 +88,15 @@ export const StyledFlex = styled.div`
   justify-content: space-between;
   display: flex;
   align-items: center;
+
+  ${(props) =>
+    props.extended &&
+    css`
+      @media (max-width: ${theme.breakpoints.tablet}) {
+        flex-direction: column;
+      }
+      gap: ${theme.space[2]};
+    `}
 `
 export const StyledLastUpdate = styled.div`
   bold {

@@ -77,6 +77,19 @@ export const deleteWeather = async (id) => {
   } catch (e) {}
 }
 
+export const deleteAllWeather = async () => {
+  try {
+    const querySnapshot = await getDocs(weatherRecordsRef)
+    const querySnapshot2 = await getDocs(weatherRecordsLogRef)
+    querySnapshot.forEach((doc) => {
+      deleteDoc(doc.ref)
+    })
+    querySnapshot2.forEach((doc) => {
+      deleteDoc(doc.ref)
+    })
+  } catch (e) {}
+}
+
 /**
  * It updates a document in a collection in a database.
  * @param payload - {

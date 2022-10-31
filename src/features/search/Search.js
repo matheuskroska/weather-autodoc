@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { getCity, getWeather } from '../../services/api'
 import { addWeather } from '../../services/database'
 import { StyledSearch } from './Search.styled'

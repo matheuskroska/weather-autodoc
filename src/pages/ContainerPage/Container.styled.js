@@ -39,4 +39,12 @@ export const StyledSubtitle = styled.h2`
   justify-content: center;
   margin: ${theme.space[1]} 0 ${theme.space[6]};
 `
+
+export const StyledToolbar = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: ${theme.space[3]} 0 ${theme.space[0]};
+  gap: ${theme.space[0]};
+`
 // linear-gradient(to right,#e62e4d,#981449)

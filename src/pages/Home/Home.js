@@ -21,12 +21,12 @@ export const Home = () => {
     <ContainerPage
       icon={<MagnifyingGlassIcon />}
       pageTitle='Minhas Consultas '
-      pageSubtitle='Consulte o clima de qualquer cidade do mundo'
-      buttonTitle='Mostrar Max/Min'
+      pageSubtitle='Consulte o clima de qualquer cidade do mundo.'
+      buttonTitle='Minhas Observações'
       toUrl='/dashboard'
     >
       <Search></Search>
-      {weatherLists && (
+      {weatherLists.length ? (
         <StyledList>
           {weatherLists &&
             weatherLists.map((weather) => (
@@ -35,6 +35,8 @@ export const Home = () => {
               </StyledListItem>
             ))}
         </StyledList>
+      ) : (
+        <p>Nenhuma consulta realizada</p>
       )}
     </ContainerPage>
   )

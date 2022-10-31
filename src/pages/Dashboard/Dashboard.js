@@ -1,9 +1,13 @@
 import { ArchiveIcon } from '@radix-ui/react-icons'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useTemperature } from '../../commom/useTemperature'
+import { Card } from '../../features/card/Card'
 import { updateLogData } from '../../features/weatherLog/weatherLogSlice'
 import { listenData, weatherRecordsLogRef } from '../../services/database'
 import { ContainerPage } from '../ContainerPage/ContainerPage'
+import { StyledList } from '../Home/HomeStyled'
+import { StyledListItem, StyledTitle } from './Dashboard.Styled'
 
 export const Dashboard = () => {
   const dispatch = useDispatch()
@@ -16,48 +20,41 @@ export const Dashboard = () => {
     (state) => state.weatherLog.weatherLogList,
   )
 
-  const useTemperature = (list, operation) => {
-    let cities = list.filter(
-      (thing, index, self) =>
-        index ===
-        self.findIndex((t) => t.location.name === thing.location.name),
-    )
-    return cities.filter(
-      (item) =>
-        item.current.temp_c ===
-        operation(...list.map((item) => item.current.temp_c, 0)),
-    )
-  }
-
   const tempMax = useTemperature(weatherLogLists, Math.max)
   const tempMin = useTemperature(weatherLogLists, Math.min)
 
   return (
     <ContainerPage
       icon={<ArchiveIcon />}
-      pageTitle='Registro Max/Min por Cidade'
+      pageTitle='Minhas Observações'
+      pageSubtitle='Informações detalhadas sobre o clima das cidades com a maior e menor temperatura registradas até o momento.'
       buttonTitle='Voltar'
       toUrl='/'
     >
-      <h1>Dashboard</h1>
-      <ul>
-        {tempMax &&
-          tempMax.map((weatherLog) => (
-            <li>
-              <h2>{weatherLog.location.name} - Max</h2>
-              <p>{weatherLog.current.temp_c}°C</p>
-            </li>
-          ))}
-      </ul>
-      <ul>
-        {tempMin &&
-          tempMin.map((weatherLog) => (
-            <li>
-              <h2>{weatherLog.location.name} - Min</h2>
-              <p>{weatherLog.current.temp_c}°C</p>
-            </li>
-          ))}
-      </ul>
+      <StyledTitle>Cidade(s) com a maior temperatura:</StyledTitle>
+      <StyledList>
+        {tempMax.length ? (
+          tempMax.map((weather) => (
+            <StyledListItem key={weather.key}>
+              <Card extended weather={weather}></Card>
+            </StyledListItem>
+          ))
+        ) : (
+          <p>Nenhuma observação</p>
+        )}
+      </StyledList>
+      <StyledTitle>Cidade(s) com a menor temperatura:</StyledTitle>
+      <StyledList>
+        {tempMin.length ? (
+          tempMin.map((weather) => (
+            <StyledListItem key={weather.key}>
+              <Card extended weather={weather}></Card>
+            </StyledListItem>
+          ))
+        ) : (
+          <p>Nenhuma observação</p>
+        )}
+      </StyledList>
     </ContainerPage>
   )
 }
