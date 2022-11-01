@@ -1,5 +1,7 @@
 ## weather-autodoc
 
+![](https://i.imgur.com/9hurVaz.png)
+
 teste para a vaga de desenvolvedor frontend
 
 ## instruções
