@@ -6,7 +6,9 @@ export const getCity = async (inputValue) => {
       `${process.env.REACT_APP_WEATHER_API_URL}/search.json?q=${inputValue}`,
       ApiOptions,
     )
-    const data = await response.json()
+
+    let data = []
+    data = await response.json()
 
     return {
       options: data?.map((location) => {
@@ -57,9 +59,6 @@ export const getWeather = async (searchData) => {
             },
             day: {
               avgtemp_c: data.forecast.forecastday[0].day.avgtemp_c,
-              condition: {
-                icon: data.forecast.forecastday[0].day.condition.icon,
-              },
               maxtemp_c: data.forecast.forecastday[0].day.maxtemp_c,
               mintemp_c: data.forecast.forecastday[0].day.mintemp_c,
               daily_chance_of_rain:
