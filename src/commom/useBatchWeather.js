@@ -1,3 +1,4 @@
+import { setLoader } from '../features/loader/loaderSlice'
 import { getCity, getWeather } from '../services/api'
 import { addWeather } from '../services/database'
 
@@ -6,8 +7,12 @@ import { addWeather } from '../services/database'
  * cities.
  * @param location - The location to search for.
  */
-const randomCities = async (location) => {
+
+const useRandomCities = async (dispatch, location) => {
   try {
+    dispatch(
+      setLoader({ loading: true, error: false, message: '', name: 'batch' }),
+    )
     let promiseCity = []
     location.map(async (city) => {
       promiseCity.push(getCity(city))
@@ -32,15 +37,14 @@ const randomCities = async (location) => {
       promiseAddWeather.push(addWeather(item))
     })
     await Promise.all(promiseAddWeather)
-
-    return weather
+    dispatch(setLoader({ loading: false, error: false, message: '', name: '' }))
   } catch (error) {
     throw error
   }
 }
 
-export const useBatchWeather = () => {
-  randomCities([
+export const useBatchWeather = async (dispatch) => {
+  useRandomCities(dispatch, [
     'Brazil',
     'Germany',
     'France',

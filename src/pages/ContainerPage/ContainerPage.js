@@ -1,4 +1,4 @@
-import { PlusIcon, TrashIcon } from '@radix-ui/react-icons'
+import { TrashIcon } from '@radix-ui/react-icons'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { Button } from '../../features/button/Button'
@@ -11,10 +11,11 @@ import {
   StyledToolbar,
   StyledWrapper,
 } from './Container.styled'
-import { useBatchWeather } from '../../commom/useBatchWeather'
+import { useBatchWeather as batchWeather } from '../../commom/useBatchWeather'
 import { deleteAllWeather } from '../../services/database'
 import { ReactComponent as IconDice } from '../../assets/images/dice.svg'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { Loader } from '../../features/loader/Loader'
 
 export const ContainerPage = ({
   icon,
@@ -24,7 +25,12 @@ export const ContainerPage = ({
   toUrl,
   ...props
 }) => {
+  const dispatch = useDispatch()
   const weatherLists = useSelector((state) => state.weather.weatherList)
+  const loader = useSelector((state) => state.loader.loaderState)
+  const handleGetRandom = () => {
+    batchWeather(dispatch)
+  }
 
   return (
     <StyledMain>
@@ -39,9 +45,21 @@ export const ContainerPage = ({
             <Link to={toUrl}>{buttonTitle}</Link>
           </Button>
           <StyledToolbar>
-            <Button variant='toolbarSVG' onClick={useBatchWeather}>
-              <IconDice />
-            </Button>
+            {loader.loading && loader.name === 'batch' ? (
+              <>
+                <Loader />
+              </>
+            ) : (
+              <Button
+                variant='toolbarSVG'
+                width='140'
+                height='64'
+                onClick={() => handleGetRandom()}
+              >
+                <IconDice />
+              </Button>
+            )}
+
             {weatherLists.length > 0 && (
               <Button variant='toolbarSVG' onClick={deleteAllWeather}>
                 <TrashIcon />
