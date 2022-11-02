@@ -21,7 +21,7 @@ utilizar o env.example deste repositório, adicionar as chaves do firebase e ren
 
 ## roadmap
 
-* exibir previsão dos próximos dias (a requisição já existe, mas por enquanto está exibindo apenas o dia corrente)
+* exibir previsão dos próximos dias (a requisição já existe, mas optei por exibir apenas o dia corrente)
 * slice para loaders no carregamento das requisições e envio de dados.
 * slice para mensagens de erro/sucesso ( toast ).
 * adicionar transições no carregamento dos cards.
