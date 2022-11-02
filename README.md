@@ -6,7 +6,7 @@ teste para a vaga de desenvolvedor frontend
 
 ## instruções
 
-utilizar o env.example neste diretorio, adicionar as chaves do firebase e renomear para .env
+utilizar o env.example deste repositório, adicionar as chaves do firebase e renomear para .env
 
 ## tech
 
