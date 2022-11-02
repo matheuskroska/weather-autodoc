@@ -19,8 +19,8 @@ utilizar o env.example deste repositório, adicionar as chaves do firebase e ren
 
 ## roadmap
 
-* slice para loaders
-* slice para mensagens de erro/sucesso ( toast )
+* slice para loaders no carregamento das requisições e envio de dados.
+* slice para mensagens de erro/sucesso ( toast ).
 * adicionar debounce em todos os botões/inputs com requisições.
 * refatorar o código para utilizar o listenerMiddleware do redux-toolkit como alternativa ao saga que não foi utilizado.
 
