@@ -8,6 +8,8 @@ teste para a vaga de desenvolvedor frontend
 
 utilizar o env.example deste repositório, adicionar as chaves do firebase e renomear para .env
 
+* npm run start - roda o projeto
+
 ## tech
 
 * Redux + Redux Toolkit
