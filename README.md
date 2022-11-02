@@ -23,3 +23,12 @@ utilizar o env.example deste repositório, adicionar as chaves do firebase e ren
 * slice para mensagens de erro/sucesso ( toast )
 * adicionar debounce em todos os botões/inputs com requisições.
 * refatorar o código para utilizar o listenerMiddleware do redux-toolkit como alternativa ao saga que não foi utilizado.
+
+## considerações finais
+
+pra respeitar o tempo do teste, não fiz, mas gostaria:
+
+* de ter feito os roadmaps.
+* de ter arquitetado a solução dessa forma:
+
+![](https://i.imgur.com/UTNZNIf.png)
