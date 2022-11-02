@@ -18,7 +18,7 @@ jest.mock('../features/card/Card', () => ({
   updateAndLogWeather: jest.fn(),
 }))
 
-// describe updateWeather
+
 describe('updateWeather', () => {
   it('should call updateWeather', async () => {
     const location = {
