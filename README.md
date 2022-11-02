@@ -14,3 +14,10 @@ utilizar o env.example deste repositório, adicionar as chaves do firebase e ren
 * Firebase Firestore
 * Styled Components
 * Jest
+
+## roadmap
+
+* slice para loaders
+* slice para mensagens de erro/sucesso ( toast )
+* adicionar debounce em todos os botões/inputs com requisições.
+* refatorar o código para utilizar o listenerMiddleware do redux-toolkit como alternativa ao saga que não foi utilizado.
