@@ -8,6 +8,7 @@ import {
   getDocs,
   query,
   onSnapshot,
+  writeBatch,
 } from 'firebase/firestore'
 
 import firestoreDB from '../config/firestore'
@@ -81,13 +82,18 @@ export const deleteAllWeather = async () => {
   try {
     const querySnapshot = await getDocs(weatherRecordsRef)
     const querySnapshot2 = await getDocs(weatherRecordsLogRef)
+
+    let batch = writeBatch(firestoreDB)
     querySnapshot.forEach((doc) => {
-      deleteDoc(doc.ref)
+      batch.delete(doc.ref)
     })
     querySnapshot2.forEach((doc) => {
-      deleteDoc(doc.ref)
+      batch.delete(doc.ref)
     })
-  } catch (e) {}
+    await batch.commit()
+  } catch (e) {
+    console.log(e)
+  }
 }
 
 /**
