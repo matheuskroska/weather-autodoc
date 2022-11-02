@@ -91,7 +91,7 @@ export const Card = ({ extended, weather, ...props }) => {
         </StyledFlex>
         <StyledLastUpdate>
           <span>
-            <bold>ATUALIZADO EM :</bold> {weather.location.lastUpdate}
+            <span>ATUALIZADO EM :</span> {weather.location.lastUpdate}
           </span>
         </StyledLastUpdate>
       </StyledContainer>

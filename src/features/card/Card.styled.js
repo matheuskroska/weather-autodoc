@@ -99,7 +99,7 @@ export const StyledFlex = styled.div`
     `}
 `
 export const StyledLastUpdate = styled.div`
-  bold {
+  span > span {
     font-weight: ${theme.font.weigths.bold};
     margin-right: ${theme.space[0]};
   }
