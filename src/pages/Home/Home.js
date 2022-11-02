@@ -30,7 +30,7 @@ export const Home = () => {
         <StyledList>
           {weatherLists &&
             weatherLists.map((weather) => (
-              <StyledListItem>
+              <StyledListItem key={weather.location.id}>
                 <Card weather={weather}></Card>
               </StyledListItem>
             ))}
