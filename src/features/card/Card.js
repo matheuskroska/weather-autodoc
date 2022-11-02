@@ -1,7 +1,6 @@
 import { TrashIcon, UpdateIcon } from '@radix-ui/react-icons'
-import React from 'react'
-import { useSelector } from 'react-redux'
-import { useDebounce } from '../../commom/useDebounce'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { getWeather } from '../../services/api'
 import { deleteWeather, updateWeather } from '../../services/database'
 import { Button } from '../button/Button'
@@ -18,20 +17,42 @@ import {
   StyledTempWrapper,
   StyledTitle,
 } from './Card.styled'
+import { setLoader } from '../loader/loaderSlice'
+import { Loader } from '../loader/Loader'
 
 export const Card = ({ extended, weather, ...props }) => {
+  const dispatch = useDispatch()
   const weatherLists = useSelector((state) => state.weather.weatherList)
+  const loader = useSelector((state) => state.loader.loaderState)
 
-  const handleUpdate = useDebounce((location, weatherLists) =>
-    updateAndLogWeather(location, weatherLists),
-  )
+  const handleUpdate = (location, weatherLists, e) => {
+    updateAndLogWeather(location, weatherLists)
+  }
 
   const updateAndLogWeather = (location, list) => {
     try {
+      dispatch(
+        setLoader({
+          loading: true,
+          error: false,
+          message: '',
+          name: 'update',
+          id: location.id,
+        }),
+      )
       list.map(async (city) => {
         if (city.location.id === location.id) {
           const cityWeather = await getWeather(location)
           await updateWeather({ ...cityWeather, doc_id: city.doc_id })
+          dispatch(
+            setLoader({
+              loading: false,
+              error: false,
+              message: '',
+              name: '',
+              id: 0,
+            }),
+          )
         }
       })
     } catch (error) {
@@ -99,12 +120,20 @@ export const Card = ({ extended, weather, ...props }) => {
         <Button variant='svg' onClick={() => handleDelete(weather.doc_id)}>
           <TrashIcon />
         </Button>
-        <Button
-          variant='svg'
-          onClick={() => handleUpdate(weather.location, weatherLists)}
-        >
-          <UpdateIcon />
-        </Button>
+
+        {loader.id === weather.location.id ? (
+          <Loader type='update' />
+        ) : (
+          <>
+            <Button
+              id={weather.location.id}
+              variant='svg'
+              onClick={(e) => handleUpdate(weather.location, weatherLists, e)}
+            >
+              <UpdateIcon />
+            </Button>
+          </>
+        )}
       </StyledButtonContainer>
     </StyledCard>
   )
