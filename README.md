@@ -14,6 +14,3 @@ utilizar o env.example deste repositório, adicionar as chaves do firebase e ren
 * Firebase Firestore
 * Styled Components
 * Jest
-
-## data flow
-![](https://i.imgur.com/E91tAHx.png)
