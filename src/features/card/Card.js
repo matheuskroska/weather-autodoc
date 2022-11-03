@@ -4,26 +4,26 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getWeather } from '../../services/api'
 import { deleteWeather, updateWeather } from '../../services/database'
 import { Button } from '../button/Button'
-import { ReactComponent as IconRain } from '../../assets/images/ico-rain.svg'
 import {
-  StyledAverage,
   StyledButtonContainer,
   StyledCard,
   StyledContainer,
-  StyledCurrent,
+  StyledDaysButtonWrapper,
   StyledFlex,
   StyledLastUpdate,
-  StyledTempMinMax,
-  StyledTempWrapper,
   StyledTitle,
 } from './Card.styled'
 import { setLoader } from '../loader/loaderSlice'
 import { Loader } from '../loader/Loader'
+import { convertDate } from '../../commom/convertDate'
+import { ForecastCard } from './ForecastCard'
 
 export const Card = ({ extended, weather, ...props }) => {
   const dispatch = useDispatch()
   const weatherLists = useSelector((state) => state.weather.weatherList)
   const loader = useSelector((state) => state.loader.loaderState)
+  const [curDay, setCurDay] = useState(0)
+  const [convertedDay, setConvertedDay] = useState([])
 
   const handleUpdate = (location, weatherLists, e) => {
     updateAndLogWeather(location, weatherLists)
@@ -64,52 +64,67 @@ export const Card = ({ extended, weather, ...props }) => {
     deleteWeather(id)
   }
 
+  useEffect(() => {
+    const days = weather.forecast.map((day) => {
+      return convertDate(day.date).replace('.', '')
+    })
+    setConvertedDay(days)
+  }, [weather])
+
   return (
-    <StyledCard>
+    <StyledCard key={weather.location.id}>
       <StyledContainer>
         <StyledTitle>{weather.location.label}</StyledTitle>
         <StyledFlex extended>
-          <StyledTempWrapper>
-            <StyledCurrent>
-              <img src={weather.current.condition.icon} alt='weatherIcon'></img>
-              {weather.current.temp_c}°C
-            </StyledCurrent>
-            <StyledTempMinMax>
-              <div>
-                <span>{weather.forecast.forecastday[0].day.maxtemp_c} °C</span>
-                <span>{weather.forecast.forecastday[0].day.mintemp_c} °C</span>
-              </div>
-              <img
-                src={weather.forecast.forecastday[0].day.condition.icon}
-                alt='weatherIcon'
-              ></img>
-            </StyledTempMinMax>
-          </StyledTempWrapper>
-          {extended && (
+          {curDay === 0 ? (
             <>
-              <StyledAverage>
-                <span>SENSAÇÃO TÉRMICA: {weather.current.feelslike_c} °C</span>
-                <span>VENTO: {weather.current.gust_kph} KM</span>
-              </StyledAverage>
-              <StyledAverage>
-                <span>
-                  NASCER DO SOL: {weather.forecast.forecastday[0].astro.sunrise}
-                </span>
-                <span>
-                  POR DO SOL: {weather.forecast.forecastday[0].astro.sunset}
-                </span>
-              </StyledAverage>
+              <ForecastCard
+                extended={extended}
+                weather={weather}
+                currentDay={0}
+              ></ForecastCard>
+            </>
+          ) : curDay === 1 ? (
+            <>
+              <ForecastCard
+                extended={extended}
+                weather={weather}
+                currentDay={1}
+              ></ForecastCard>
+            </>
+          ) : (
+            <>
+              <ForecastCard
+                extended={extended}
+                weather={weather}
+                currentDay={2}
+              ></ForecastCard>
             </>
           )}
-
-          <StyledAverage>
-            <span>AVG {weather.forecast.forecastday[0].day.avgtemp_c} °C</span>
-            <span>
-              <IconRain />
-              {weather.forecast.forecastday[0].day.daily_chance_of_rain}%
-            </span>
-          </StyledAverage>
         </StyledFlex>
+        <StyledDaysButtonWrapper>
+          <Button
+            active={curDay === 0}
+            variant='days'
+            onClick={() => setCurDay(0)}
+          >
+            {convertedDay[0]}
+          </Button>
+          <Button
+            active={curDay === 1}
+            variant='days'
+            onClick={() => setCurDay(1)}
+          >
+            {convertedDay[1]}
+          </Button>
+          <Button
+            active={curDay === 2}
+            variant='days'
+            onClick={() => setCurDay(2)}
+          >
+            {convertedDay[2]}
+          </Button>
+        </StyledDaysButtonWrapper>
         <StyledLastUpdate>
           <span>
             <span>ATUALIZADO EM :</span> {weather.location.lastUpdate}

@@ -17,3 +17,8 @@ export const StyledListItem = styled.li`
     max-width: 100%;
   }
 `
+
+export const StyledParagraph = styled.p`
+  font-size: ${theme.font.sizes.xsmall};
+  margin-left: 10px;
+`

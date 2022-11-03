@@ -80,6 +80,38 @@ const variants = {
     }
     background-color: transparent;
   `,
+
+  days: css`
+    background-color: ${theme.colors.white};
+    font-family: ${theme.font.family};
+    text-decoration: none;
+    color: ${theme.colors.blue};
+    width: ${theme.space[5]};
+    height: ${theme.space[5]};
+    padding: 0 ${theme.space[3]};
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &:hover {
+      color: ${theme.colors.red};
+      text-decoration: none;
+    }
+
+    ${({ active }) => {
+      if (active) {
+        return {
+          color: theme.colors.white,
+          fontWeight: theme.font.weigths.bold,
+          backgroundColor: theme.colors.red,
+
+          '&:hover': {
+            color: theme.colors.white,
+            backgroundColor: theme.colors.red,
+          },
+        }
+      }
+    }}
+  `,
 }
 
 export const StyledButton = styled.button`
