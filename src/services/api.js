@@ -29,15 +29,13 @@ export const getWeather = async (searchData) => {
   try {
     const response = await fetch(
       process.env.REACT_APP_WEATHER_API_URL +
-        `/forecast.json?q=${cityData.name}&days=0`,
+        `/forecast.json?q=${cityData.name}&days=3&lang=pt`,
       ApiOptions,
     )
 
     const data = await response.json()
-    // console.log(data)
 
     const cityWeather = {
-      // ...(await response.json()),
       current: {
         temp_c: data.current.temp_c,
         feelslike_c: data.current.feelslike_c,
@@ -47,30 +45,28 @@ export const getWeather = async (searchData) => {
           icon: data.current.condition.icon,
         },
       },
-      forecast: {
-        forecastday: [
-          {
-            astro: {
-              sunrise: data.forecast.forecastday[0].astro.sunrise,
-              sunset: data.forecast.forecastday[0].astro.sunset,
-              moonset: data.forecast.forecastday[0].astro.moonset,
-              moonrise: data.forecast.forecastday[0].astro.moonrise,
-              moonfase: data.forecast.forecastday[0].astro.moon_phase,
-            },
-            day: {
-              avgtemp_c: data.forecast.forecastday[0].day.avgtemp_c,
-              maxtemp_c: data.forecast.forecastday[0].day.maxtemp_c,
-              mintemp_c: data.forecast.forecastday[0].day.mintemp_c,
-              daily_chance_of_rain:
-                data.forecast.forecastday[0].day.daily_chance_of_rain,
-              condition: {
-                text: data.forecast.forecastday[0].day.condition.text,
-                icon: data.forecast.forecastday[0].day.condition.icon,
-              },
+      forecast: data.forecast.forecastday.map((day) => {
+        return {
+          astro: {
+            sunrise: day.astro.sunrise,
+            sunset: day.astro.sunset,
+            moonset: day.astro.moonset,
+            moonrise: day.astro.moonrise,
+            moonfase: day.astro.moon_phase,
+          },
+          date: day.date,
+          day: {
+            avgtemp_c: day.day.avgtemp_c,
+            maxtemp_c: day.day.maxtemp_c,
+            mintemp_c: day.day.mintemp_c,
+            daily_chance_of_rain: day.day.daily_chance_of_rain,
+            condition: {
+              text: day.day.condition.text,
+              icon: day.day.condition.icon,
             },
           },
-        ],
-      },
+        }
+      }),
       location: {
         id: cityData.id,
         name: cityData.name,
@@ -80,7 +76,7 @@ export const getWeather = async (searchData) => {
       },
     }
     return cityWeather
-  } catch {
-    console.log('Error')
+  } catch (e) {
+    console.log(e)
   }
 }

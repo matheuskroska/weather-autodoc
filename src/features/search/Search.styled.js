@@ -8,4 +8,5 @@ export const StyledSearch = styled(AsyncPaginate)`
     rgb(0 0 0 / 30%) 0px 1px 3px -1px;
   border-color: transparent;
   border-radius: ${theme.borderRadius.sm};
+  margin-bottom: ${theme.space[0]};
 `

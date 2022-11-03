@@ -47,4 +47,3 @@ export const StyledToolbar = styled.div`
   margin: ${theme.space[3]} 0 ${theme.space[0]};
   gap: ${theme.space[0]};
 `
-// linear-gradient(to right,#e62e4d,#981449)

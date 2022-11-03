@@ -35,7 +35,7 @@ export const Dashboard = () => {
       <StyledList>
         {tempMax.length ? (
           tempMax.map((weather) => (
-            <StyledListItem key={weather.key}>
+            <StyledListItem key={weather.location.id}>
               <Card extended weather={weather}></Card>
             </StyledListItem>
           ))
@@ -47,7 +47,7 @@ export const Dashboard = () => {
       <StyledList>
         {tempMin.length ? (
           tempMin.map((weather) => (
-            <StyledListItem key={weather.key}>
+            <StyledListItem key={weather.location.id}>
               <Card extended weather={weather}></Card>
             </StyledListItem>
           ))

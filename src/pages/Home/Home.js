@@ -6,7 +6,7 @@ import { updateData } from '../../features/weather/weatherSlice'
 
 import { listenData, weatherRecordsRef } from '../../services/database'
 import { Card } from '../../features/card/Card'
-import { StyledList, StyledListItem } from './HomeStyled'
+import { StyledList, StyledListItem, StyledParagraph } from './HomeStyled'
 import { MagnifyingGlassIcon } from '@radix-ui/react-icons'
 
 export const Home = () => {
@@ -36,7 +36,7 @@ export const Home = () => {
             ))}
         </StyledList>
       ) : (
-        <p>Nenhuma consulta realizada</p>
+        <StyledParagraph>Nenhuma consulta realizada</StyledParagraph>
       )}
     </ContainerPage>
   )
