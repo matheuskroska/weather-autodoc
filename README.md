@@ -8,7 +8,8 @@ teste para a vaga de desenvolvedor frontend
 
 ## instruções
 
-OBRIGATÓRIO => utilizar o env.example deste repositório, adicionar as chaves do firebase e renomear para .env
+OBRIGATÓRIO => afim de testar e validar a aplicação pelo console do firebase:
+utilizar o env.example deste repositório, criar um repositorio firebase e iniciar um banco firestore, adicionar as chaves e renomear para .env
 
 executando o projeto no seu ambiente:
 
