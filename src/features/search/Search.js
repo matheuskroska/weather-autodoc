@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { getCity, getWeather } from '../../services/api'
 import { addWeather } from '../../services/database'
 import { StyledSearch } from './Search.styled'
 
 export const Search = () => {
-  const [search, setSearch] = useState('')
+  const [search] = useState('')
 
   const handleOnChange = async (city) => {
     try {

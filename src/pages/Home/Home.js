@@ -36,7 +36,7 @@ export const Home = () => {
             ))}
         </StyledList>
       ) : (
-        <StyledParagraph>Nenhuma consulta realizada</StyledParagraph>
+        <StyledParagraph>Nenhuma consulta realizada !</StyledParagraph>
       )}
     </ContainerPage>
   )
