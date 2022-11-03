@@ -15,7 +15,7 @@ executando o projeto no seu ambiente:
 * npm install - instala as dependências 
 * npm run start - roda o projeto
 
-ou executando o projeto em um container:
+ou executando o projeto em um container 🐳:
 
 * npm run dev - levanta o ambiente docker.
 
