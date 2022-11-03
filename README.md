@@ -8,10 +8,17 @@ teste para a vaga de desenvolvedor frontend
 
 ## instruções
 
-utilizar o env.example deste repositório, adicionar as chaves do firebase e renomear para .env
+OBRIGATÓRIO => utilizar o env.example deste repositório, adicionar as chaves do firebase e renomear para .env
 
-* npm install - instala dependências 
+executando o projeto no seu ambiente:
+
+* npm install - instala as dependências 
 * npm run start - roda o projeto
+
+ou executando o projeto em um container:
+
+* npm run dev - levanta o ambiente docker.
+
 
 ## tech
 
