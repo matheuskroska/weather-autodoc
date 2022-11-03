@@ -2,7 +2,7 @@
 
 * deploy : https://autodoc-weather-238e2.web.app/
 
-![](https://i.imgur.com/9hurVaz.png)
+![](https://i.imgur.com/mchSd7S.png)
 
 teste para a vaga de desenvolvedor frontend
 
