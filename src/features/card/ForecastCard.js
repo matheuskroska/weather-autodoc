@@ -27,7 +27,10 @@ export const ForecastCard = ({ weather, extended, currentDay }) => {
               }
               alt='weatherIcon'
             ></img>
-            {weather.current.temp_c}°C
+            {currentDay === 0
+              ? weather.current.temp_c
+              : weather.forecast[currentDay].day.avgtemp_c}
+            °C
           </StyledCurrent>
           <StyledTempMinMax>
             <div>
