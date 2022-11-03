@@ -2,7 +2,7 @@
 
 * deploy : https://autodoc-weather-238e2.web.app/
 
-![](https://i.imgur.com/9hurVaz.png)
+![](https://i.imgur.com/mchSd7S.png)
 
 teste para a vaga de desenvolvedor frontend
 
@@ -29,9 +29,9 @@ utilizar o env.example deste repositório, adicionar as chaves do firebase e ren
 
 ## considerações finais
 
-pra respeitar o tempo do teste, não fiz, mas gostaria:
+não fiz, mas gostaria:
 
-* de ter feito os roadmaps.
+* de ter feito todos os roadmaps.
 * de ter arquitetado a solução dessa forma:
 
 ![](https://i.imgur.com/UTNZNIf.png)
