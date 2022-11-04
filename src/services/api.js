@@ -1,13 +1,40 @@
 import { deleteEmptySpaces } from '../commom/deleteEmptySpaces'
 import { ApiOptions } from '../config/api'
 
+/**
+ * It takes a string as an argument, and returns an object with an array of objects as a property.
+ *
+ * The array of objects has three properties: id, name, and label.
+ *
+ * The id property is a number, the name property is a string, and the label property is a string.
+ *
+ * The label property is a concatenation of the name property and the country property.
+ *
+ * The country property is a string.
+ *
+ * The country property is not included in the returned object.
+ *
+ * The returned object is used to populate a dropdown menu.
+ *
+ * The dropdown menu is used to select a city.
+ *
+ * The city is used to get weather data.
+ *
+ * The weather data is displayed on the page.
+ *
+ * The user can select a different city.
+ *
+ * The user can select a different city by typing
+ * @param inputValue - The current value of the input element.
+ * @returns An object with an options property that is an array of objects.
+ */
+
+const CITY_ENDPOINT = `${process.env.REACT_APP_WEATHER_API_URL}/search.json?`
+
 export const getCity = async (inputValue) => {
   if (deleteEmptySpaces(inputValue).length === 0) return
   try {
-    const response = await fetch(
-      `${process.env.REACT_APP_WEATHER_API_URL}/search.json?q=${inputValue}`,
-      ApiOptions,
-    )
+    const response = await fetch(`${CITY_ENDPOINT}q=${inputValue}`, ApiOptions)
 
     let data = await response.json()
 
@@ -27,12 +54,19 @@ export const getCity = async (inputValue) => {
   }
 }
 
+/**
+ * It gets the weather data from the API and returns it in a specific format
+ * @param searchData - {id: "BRXX0061", name: "São Paulo", label: "São Paulo, SP, Brazil"}
+ * @returns An object with the following structure:
+ */
+
+const FORECAST_ENDPOINT = `${process.env.REACT_APP_WEATHER_API_URL}/forecast.json`
+
 export const getWeather = async (searchData) => {
   const cityData = searchData
   try {
     const response = await fetch(
-      process.env.REACT_APP_WEATHER_API_URL +
-        `/forecast.json?q=${cityData.name}&days=3&lang=pt`,
+      `${FORECAST_ENDPOINT}?q=${cityData.name}&days=3&lang=pt`,
       ApiOptions,
     )
 

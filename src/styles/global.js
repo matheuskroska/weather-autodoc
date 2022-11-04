@@ -9,6 +9,7 @@ export const GlobalStyles = createGlobalStyle`
     box-sizing: border-box;
   }
   body {
+    height: 100vh;
     font-size: 62.5%;
     background: ${theme.colors.white};
     font-family: ${theme.font.family};
