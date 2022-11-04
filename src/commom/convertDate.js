@@ -11,7 +11,6 @@ const DATE_OPTIONS = {
 }
 
 export const convertDate = (date) => {
-  console.log(date)
   const newDate = new Date(date)
   return newDate.toLocaleString(LANG, {
     weekday: DATE_OPTIONS.weekday,
