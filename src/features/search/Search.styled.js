@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 import { AsyncPaginate } from 'react-select-async-paginate'
 import { theme } from '../../styles/theme'
 
