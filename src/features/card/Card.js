@@ -69,8 +69,11 @@ export const Card = ({ extended, weather, ...props }) => {
     const days = weather.forecast.map((day) => {
       return convertDate(day.date).replace('.', '')
     })
+    // console.log(days)
     setConvertedDay(days)
   }, [weather])
+
+  // console.log(weather)
 
   return (
     <StyledCard key={weather.location.id}>

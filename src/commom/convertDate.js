@@ -7,11 +7,14 @@
 const LANG = 'pt-BR'
 const DATE_OPTIONS = {
   weekday: 'short',
+  timeZone: 'UTC',
 }
 
 export const convertDate = (date) => {
+  console.log(date)
   const newDate = new Date(date)
   return newDate.toLocaleString(LANG, {
     weekday: DATE_OPTIONS.weekday,
+    timeZone: DATE_OPTIONS.timeZone,
   })
 }
