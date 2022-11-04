@@ -1,15 +1,21 @@
-import React, { useState } from 'react'
 import { getCity, getWeather } from '../../services/api'
 import { addWeather } from '../../services/database'
 import { StyledSearch } from './Search.styled'
 
 export const Search = () => {
-  const [search] = useState('')
-
   const handleOnChange = async (city) => {
     try {
       const cityWeather = await getWeather(city)
-      await addWeather(cityWeather)
+      addWeather(cityWeather)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  const handleOnLoadOptions = async (cityName) => {
+    try {
+      const cityData = await getCity(cityName)
+      return cityData === undefined ? { options: [] } : cityData
     } catch (error) {
       console.error(error)
     }
@@ -19,9 +25,10 @@ export const Search = () => {
     <StyledSearch
       placeholder='Busque pelo nome da cidade...'
       debounceTimeout={600}
-      value={search}
+      value=''
+      loadOptionsOnMenuOpen={false}
       onChange={handleOnChange}
-      loadOptions={getCity}
+      loadOptions={handleOnLoadOptions}
     />
   )
 }

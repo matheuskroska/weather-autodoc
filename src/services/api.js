@@ -1,23 +1,26 @@
+import { deleteEmptySpaces } from '../commom/deleteEmptySpaces'
 import { ApiOptions } from '../config/api'
 
 export const getCity = async (inputValue) => {
+  if (deleteEmptySpaces(inputValue).length === 0) return
   try {
     const response = await fetch(
       `${process.env.REACT_APP_WEATHER_API_URL}/search.json?q=${inputValue}`,
       ApiOptions,
     )
 
-    let data = []
-    data = await response.json()
+    let data = await response.json()
+
+    if (data.error) {
+      return (data = { options: [] })
+    }
 
     return {
-      options: data?.map((location) => {
-        return {
-          id: location.id,
-          name: `${location.name}`,
-          label: `${location.name}, ${location.country}`,
-        }
-      }),
+      options: data.map((city) => ({
+        id: city.id,
+        name: city.name,
+        label: `${city.name}, ${city.country}`,
+      })),
     }
   } catch (error) {
     console.error(error)
