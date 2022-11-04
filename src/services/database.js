@@ -10,22 +10,20 @@ import {
   onSnapshot,
   writeBatch,
 } from 'firebase/firestore'
-
 import firestoreDB from '../config/firestore'
-// import { updateData } from '../features/weather/weatherSlice'
 
-/* Just a constant that is used to reference the collection and the document id. */
 const WEATHER_COLLECTION = 'weatherRecords'
 const WEATHER_COLLECTION_LOG = 'weatherRecordsLog'
 const DOCUMENT_ID = 'doc_id'
 const CITY_NAME = 'location.name'
 
+/**
+ * It checks if a document exists in a collection, if it doesn't, it creates a new document in the
+ * collection and then updates the document with a new field.
+ * @param payload - {
+ */
+
 export const addWeather = async (payload) => {
-  /**
-   * It checks if a document exists in a collection, if it doesn't, it creates a new document in the
-   * collection and then updates the document with a new field.
-   * @param payload - {
-   */
   try {
     const querySnapshot = await hasOnCollection(
       weatherRecordsRef,
@@ -78,6 +76,10 @@ export const deleteWeather = async (id) => {
   } catch (e) {}
 }
 
+/**
+ * Delete all documents in the weatherRecords collection and all documents in the weatherRecordsLog
+ * collection.
+ */
 export const deleteAllWeather = async () => {
   try {
     const querySnapshot = await getDocs(weatherRecordsRef)
@@ -101,7 +103,6 @@ export const deleteAllWeather = async () => {
  * @param payload - {
  */
 export const updateWeather = async (payload) => {
-  // console.log(payload)
   try {
     await updateDoc(doc(firestoreDB, WEATHER_COLLECTION, payload.doc_id), {
       ...payload,
@@ -124,7 +125,6 @@ export const weatherRecordsLogRef = collection(
  * @param value - the value you want to check for
  * @returns A promise that resolves to a boolean.
  */
-
 export const hasOnCollection = async (collection, field, value) => {
   const q = query(collection, where(field, '==', value))
   const querySnapshot = await getDocs(q)

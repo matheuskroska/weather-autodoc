@@ -3,22 +3,25 @@ import { getWeather } from '../services/api'
 import { addWeather } from '../services/database'
 import { updateAndLogWeather } from '../features/card/Card'
 
+/* Mocking the functions from the api file. */
 jest.mock('../services/api', () => ({
   getCity: jest.fn(),
   getWeather: jest.fn(),
 }))
 
+/* Mocking the functions from the database file. */
 jest.mock('../services/database', () => ({
   addWeather: jest.fn(),
   deleteWeather: jest.fn(),
   updateWeather: jest.fn(),
 }))
 
+/* Mocking the function updateAndLogWeather from the file Card.js. */
 jest.mock('../features/card/Card', () => ({
   updateAndLogWeather: jest.fn(),
 }))
 
-
+/* Testing the function updateWeather. */
 describe('updateWeather', () => {
   it('should call updateWeather', async () => {
     const location = {
@@ -103,6 +106,7 @@ describe('updateWeather', () => {
   })
 })
 
+/* Testing the function deleteWeather. */
 describe('deleteWeather', () => {
   it('should delete a weather', async () => {
     const id = '123'
@@ -112,6 +116,7 @@ describe('deleteWeather', () => {
   })
 })
 
+/* Testing the function addWeather. */
 describe('addWeather', () => {
   it('should add a new weather', async () => {
     const weather = {
@@ -146,6 +151,7 @@ describe('addWeather', () => {
   })
 })
 
+/* Testing the function getCity. */
 describe('getCity', () => {
   it('should return the city data', async () => {
     const city = {
@@ -163,6 +169,7 @@ describe('getCity', () => {
   })
 })
 
+/* Testing the function getWeather. */
 describe('getWeather', () => {
   it('should return the weather data', async () => {
     const weather = {

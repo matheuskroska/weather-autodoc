@@ -64,6 +64,7 @@ export const Card = ({ extended, weather, ...props }) => {
     deleteWeather(id)
   }
 
+  /* A hook that is called when the component is mounted and when the weather variable changes. */
   useEffect(() => {
     const days = weather.forecast.map((day) => {
       return convertDate(day.date).replace('.', '')
