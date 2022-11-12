@@ -1,4 +1,4 @@
-## weather-autodoc
+## Weather-autodoc
 
 * deploy : https://autodoc-weather-238e2.web.app/
 
@@ -6,9 +6,9 @@
 
 teste para a vaga de desenvolvedor frontend
 
-## instruções
+## Instruções
 
-OBRIGATÓRIO => afim de testar e validar a aplicação pelo console do firebase:
+### OBRIGATÓRIO 🚩 afim de testar e validar a aplicação pelo console do firebase:
 
 - criar um repositorio firebase e iniciar um banco firestore.
 - utilizar o env.example deste repositório, adicionar as chaves do firestore e renomear para .env.
@@ -21,14 +21,14 @@ OBRIGATÓRIO => afim de testar e validar a aplicação pelo console do firebase:
 
 ```npm run dev```
 
-## tech
+## Tech
 
 * Redux + Redux Toolkit
 * Firebase Firestore
 * Styled Components
 * Jest
 
-## roadmap
+## Roadmap
 
 * <s>exibir previsão dos próximos dias (a requisição já existe, mas optei por exibir apenas o dia corrente)</s>✔
 * <s>slice para loaders no carregamento das requisições e envio de dados</s> ✔
@@ -36,7 +36,7 @@ OBRIGATÓRIO => afim de testar e validar a aplicação pelo console do firebase:
 * adicionar transições no carregamento dos cards.
 * refatorar o código para utilizar o listenerMiddleware do redux-toolkit como alternativa ao saga que não foi utilizado.
 
-## considerações finais
+## Considerações finais
 
 não fiz, mas gostaria:
 
