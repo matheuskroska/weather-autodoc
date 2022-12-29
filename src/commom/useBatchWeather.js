@@ -12,36 +12,34 @@ const useRandomCities = async (dispatch, location) => {
   try {
     dispatch(
       setLoader({ loading: true, error: false, message: '', name: 'batch' }),
-    )
-    let promiseCity = []
-    location.map(async (city) => {
-      promiseCity.push(getCity(city))
-    })
-    const cities = await Promise.all(promiseCity)
+    );
+    const cities = [];
+    for (const city of location) {
+      cities.push(await getCity(city));
+    }
 
-    let randomCities = []
-    cities.map(async (city) => {
+    const randomCities = [];
+    for (const city of cities) {
       randomCities.push(
         city.options[Math.floor(Math.random() * city.options.length)],
-      )
-    })
+      );
+    }
 
-    let promiseWeather = []
-    randomCities.map(async (city) => {
-      promiseWeather.push(getWeather(city))
-    })
-    const weather = await Promise.all(promiseWeather)
+    const weather = [];
+    for (const city of randomCities) {
+      weather.push(await getWeather(city));
+    }
 
-    let promiseAddWeather = []
-    weather.map(async (item) => {
-      promiseAddWeather.push(addWeather(item))
-    })
-    await Promise.all(promiseAddWeather)
-    dispatch(setLoader({ loading: false, error: false, message: '', name: '' }))
+    const promiseAddWeather = [];
+    for (const item of weather) {
+      promiseAddWeather.push(addWeather(item));
+    }
+    await Promise.all(promiseAddWeather);
+    dispatch(setLoader({ loading: false, error: false, message: '', name: '' }));
   } catch (error) {
-    throw error
+    throw error;
   }
-}
+};
 
 export const useBatchWeather = async (dispatch) => {
   useRandomCities(dispatch, [
@@ -58,5 +56,5 @@ export const useBatchWeather = async (dispatch) => {
     'China',
     'Japan',
     'Russia',
-  ])
-}
+  ]);
+};
