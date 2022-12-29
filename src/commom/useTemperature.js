@@ -6,13 +6,16 @@
  * @returns The cities with the highest and lowest temperatures.
  */
 export const useTemperature = (list, operation) => {
-  let cities = list.filter(
-    (thing, index, self) =>
-      index === self.findIndex((t) => t.location.name === thing.location.name),
-  )
-  return cities.filter(
-    (item) =>
-      item.current.temp_c ===
-      operation(...list.map((item) => item.current.temp_c, 0)),
-  )
+  // Obtenha os valores únicos da temperatura
+  const uniqueValues = list
+    .map((item) => item.current.temp_c)
+    .filter((value, index, self) => self.indexOf(value) === index);
+
+  // Encontre o valor mínimo ou máximo de acordo com a operação
+  const temperature = operation(...uniqueValues);
+
+  // Encontre as cidades com a temperatura mínima ou máxima
+  const cities = list.filter((item) => item.current.temp_c === temperature);
+
+  return cities;
 }
